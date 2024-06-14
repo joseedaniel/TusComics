@@ -10,15 +10,14 @@ public class nodeProduct {
     double price;
     nodeProduct sig, ant;
 
-    public nodeProduct(String urlImage, String idProduct, String name, String desc, int quantity, double price, String category) {
-        this.urlImage = urlImage;
-        this.idProduct = idProduct;
-        this.name = name;
-        this.desc = desc;
-        this.quantity = quantity;
-        this.price = price;
-        this.ant = null;
-        this.sig = null;
-        this.category = category;
+    public nodeProduct (){
+        urlImage = "";
+        idProduct = "";
+        name = "";
+        desc = "";
+        category = "";
+        quantity = 0;
+        price = 0;
+        sig = ant = null;
     }
 }
