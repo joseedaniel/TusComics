@@ -1,7 +1,8 @@
 package com.example.proyectocarritodecompras;
 
-public class shoppingCart {
+import java.io.*;
 
+public class shoppingCart {
 
 
     nodeProduct cab;
@@ -48,8 +49,27 @@ public class shoppingCart {
         return removedProduct;
     }
 
-    public int getSize() {
-        return size;
+    public void serialize(String filename) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+        nodeProduct current = cab;
+        if (current != null) {
+            do {
+                current.serialize(writer);
+                current = current.sig;
+            } while (current != cab);
+        }
+        writer.close();
+    }
+
+    public static shoppingCart deserialize(String filename) throws IOException {
+        shoppingCart cart = new shoppingCart();
+        BufferedReader reader = new BufferedReader(new FileReader(filename));
+        nodeProduct product;
+        while ((product = nodeProduct.deserialize(reader)) != null) {
+            cart.add(product);
+        }
+        reader.close();
+        return cart;
     }
 
 }

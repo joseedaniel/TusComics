@@ -28,7 +28,7 @@
                            <graphic>
                               <ImageView blendMode="COLOR_BURN" fitHeight="30.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@images/Rectangle%2016.png" />
+                                    <Image url="@images/Rectangle16.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -37,7 +37,7 @@
                            <graphic>
                               <ImageView fitHeight="34.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@images/Rectangle%2016%20(1).png" />
+                                    <Image url="@images/Rectangle161.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -49,7 +49,7 @@
                            <graphic>
                               <ImageView fitHeight="38.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@images/Rectangle%2075.png" />
+                                    <Image url="@images/Rectangle75.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -60,26 +60,6 @@
                      </items>
                   </SplitPane>
                </left>
-               <top>
-                  <Pane prefHeight="96.0" prefWidth="749.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Button blendMode="COLOR_BURN" layoutX="14.0" layoutY="18.0" mnemonicParsing="false">
-                           <graphic>
-                              <ImageView fitHeight="42.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/Rectangle%2010.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Label layoutX="539.0" layoutY="6.0" prefHeight="84.0" prefWidth="196.0" text="TIENDA">
-                           <font>
-                              <Font name="Inter ExtraBold" size="50.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </Pane>
-               </top>
                <center>
                   <Pane prefHeight="160.0" prefWidth="561.0" BorderPane.alignment="CENTER">
                      <children>
@@ -93,19 +73,19 @@
                                           <Font name="Inter ExtraBold" size="15.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="comprar" layoutX="164.0" layoutY="285.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="110.0" style="-fx-background-radius: 30; -fx-background-color: #0ACCF6;" text="Eliminar" textFill="WHITE">
+                                    <Button fx:id="eliminar" layoutX="164.0" layoutY="285.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="110.0" style="-fx-background-radius: 30; -fx-background-color: #0ACCF6;" text="Eliminar" textFill="WHITE">
                                        <font>
                                           <Font name="Inter ExtraBold" size="18.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="comprar1" layoutX="31.0" layoutY="283.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="111.0" style="-fx-background-radius: 30; -fx-background-color: F2DC0F;" text="Editar" textFill="WHITE">
+                                    <Button fx:id="bEditar" layoutX="31.0" layoutY="283.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="111.0" style="-fx-background-radius: 30; -fx-background-color: F2DC0F;" text="Editar" textFill="WHITE">
                                        <font>
                                           <Font name="Inter ExtraBold" size="15.0" />
                                        </font>
                                     </Button>
                                     <ScrollPane layoutX="279.0" layoutY="65.0" prefHeight="96.0" prefWidth="223.0">
                                        <content>
-                                          <Label alignment="TOP_LEFT" prefHeight="31.0" prefWidth="86.0" text="Descripción">
+                                          <Label fx:id="descripcion" alignment="TOP_LEFT" prefHeight="31.0" prefWidth="86.0" text="Descripción">
                                              <font>
                                                 <Font name="Inter ExtraBold" size="15.0" />
                                              </font>
@@ -122,17 +102,17 @@
                                           <Font name="Inter ExtraBold" size="15.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="430.0" layoutY="175.0" text="ventas">
+                                    <Label fx:id="ventas" layoutX="430.0" layoutY="175.0" text="ventas">
                                        <font>
                                           <Font name="Inter ExtraBold" size="15.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="430.0" layoutY="225.0" text="disponible">
+                                    <Label fx:id="disponibilidad" layoutX="430.0" layoutY="225.0" text="disponible">
                                        <font>
                                           <Font name="Inter ExtraBold" size="15.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="431.0" layoutY="32.0" text="\$valor">
+                                    <Label fx:id="valor" layoutX="431.0" layoutY="32.0" text="\$valor">
                                        <font>
                                           <Font name="Inter ExtraBold" size="15.0" />
                                        </font>
@@ -141,7 +121,7 @@
                               </AnchorPane>
                            </children>
                         </Pane>
-                        <Label layoutX="14.0" layoutY="8.0" prefHeight="58.0" prefWidth="390.0" text="nombreHistorieta" textFill="#e40c0c">
+                        <Label fx:id="nombreHistorieta" layoutX="14.0" layoutY="8.0" prefHeight="58.0" prefWidth="390.0" text="nombreHistorieta" textFill="#e40c0c">
                            <font>
                               <Font name="Inter ExtraBold" size="33.0" />
                            </font>
@@ -150,6 +130,58 @@
                      </children>
                   </Pane>
                </center>
+               <top>
+                  <Pane prefHeight="96.0" prefWidth="749.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <TextField fx:id="buscar1" layoutX="274.0" layoutY="30.0" prefHeight="23.0" prefWidth="167.0" style="-fx-background-color: beb5b5; -fx-background-radius: 15;">
+                           <font>
+                              <Font name="Inter ExtraBold" size="12.0" />
+                           </font>
+                        </TextField>
+                        <Button blendMode="COLOR_BURN" layoutX="450.0" layoutY="18.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="52.0">
+                           <graphic>
+                              <ImageView fitHeight="53.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/Rectangle12.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="bRegresar" blendMode="COLOR_BURN" layoutX="14.0" layoutY="18.0" mnemonicParsing="false">
+                           <graphic>
+                              <ImageView fitHeight="42.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/Rectangle10.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="bHome" blendMode="COLOR_BURN" layoutX="528.0" layoutY="25.0" mnemonicParsing="false">
+                           <graphic>
+                              <ImageView fitHeight="33.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/home.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <ImageView fitHeight="88.0" fitWidth="125.0" layoutX="645.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/logo.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="bLogout" blendMode="COLOR_BURN" layoutX="583.0" layoutY="22.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="39.0">
+                           <graphic>
+                              <ImageView fitHeight="33.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/logout.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </Pane>
+               </top>
             </BorderPane>
          </children>
       </AnchorPane>
@@ -162,7 +194,7 @@
          <graphic>
             <ImageView fitHeight="53.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/Rectangle%2012.png" />
+                  <Image url="@images/Rectangle12.png" />
                </image>
             </ImageView>
          </graphic>

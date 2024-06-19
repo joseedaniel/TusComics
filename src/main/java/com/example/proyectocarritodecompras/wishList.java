@@ -1,5 +1,7 @@
 package com.example.proyectocarritodecompras;
 
+import java.io.*;
+
 public class wishList {
 
     nodeProduct cab;
@@ -10,7 +12,6 @@ public class wishList {
         cab = null;
         fin = null;
         size = 0;
-
     }
 
     public void add(nodeProduct info) {
@@ -48,16 +49,31 @@ public class wishList {
         return removedNode;
     }
 
-    public nodeProduct peek() {
-        return cab;
-    }
-
     public boolean isEmpty() {
         return size == 0;
     }
 
-    public int getSize() {
-        return size;
+    public void serialize(String filename) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+        nodeProduct current = cab;
+        if (current != null) {
+            do {
+                current.serialize(writer);
+                current = current.sig;
+            } while (current != cab);
+        }
+        writer.close();
+    }
+
+    public static wishList deserialize(String filename) throws IOException {
+        wishList wishlist = new wishList();
+        BufferedReader reader = new BufferedReader(new FileReader(filename));
+        nodeProduct product;
+        while ((product = nodeProduct.deserialize(reader)) != null) {
+            wishlist.add(product);
+        }
+        reader.close();
+        return wishlist;
     }
 
 }

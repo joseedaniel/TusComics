@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="572.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="572.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectocarritodecompras.HelloController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#efefef" height="318.0" layoutX="104.0" layoutY="179.0" stroke="#efefef" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="30.0" strokeType="INSIDE" strokeWidth="0.0" width="563.0" />
       <Label layoutX="212.0" layoutY="368.0" text="Correo:">
@@ -18,7 +18,7 @@
             <Font name="Inter ExtraBold" size="20.0" />
          </font>
       </Label>
-      <Button layoutX="336.0" layoutY="447.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="99.0" style="-fx-background-color: c01313; -fx-background-radius: 30;" text="INICIAR SESION" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="bIniciarSesion" layoutX="336.0" layoutY="447.0" mnemonicParsing="false" onAction="#vendedorOComprador" prefHeight="21.0" prefWidth="99.0" style="-fx-background-color: c01313; -fx-background-radius: 30;" text="INICIAR SESION" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Inter ExtraBold" size="10.0" />
          </font>
@@ -31,7 +31,7 @@
             <Font name="Inter ExtraBold" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="correo" layoutX="336.0" layoutY="371.0" prefHeight="23.0" prefWidth="218.0" style="-fx-background-color: beb5b5; -fx-background-radius: 15;">
+      <TextField fx:id="usuario" layoutX="336.0" layoutY="371.0" prefHeight="23.0" prefWidth="218.0" style="-fx-background-color: beb5b5; -fx-background-radius: 15;">
          <font>
             <Font name="Inter ExtraBold" size="12.0" />
          </font>
@@ -47,11 +47,11 @@
             <Image url="@images/Ellipse1.png" />
          </image>
       </ImageView>
-      <Button blendMode="COLOR_BURN" layoutX="24.0" layoutY="28.0" mnemonicParsing="false">
+      <Button fx:id="bRegresar" blendMode="COLOR_BURN" layoutX="24.0" layoutY="28.0" mnemonicParsing="false" onAction="#irABienvenida">
          <graphic>
             <ImageView fitHeight="42.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/Rectangle%2010.png" />
+                  <Image url="@images/Rectangle10.png" />
                </image>
             </ImageView>
          </graphic>
