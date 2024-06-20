@@ -18,22 +18,29 @@ public class nodeClient extends nodeUser {
     wishList wishList;
     purchaseHistory history;
 
+    public nodeClient() {
+        super();
+        nam = "";
+        mail = "";
+        tel = 0;
+        country = "";
+        dep = "";
+        mun = "";
+        neigh = "";
+        pstCode = 0;
+        notes = "";
+        cart = new shoppingCart();
+        wishList = new wishList();
+        history = new purchaseHistory();
+    }
 
-    public nodeClient(String idLog, String pass, String nam, String mail, int tel, String country, String dep, String mun, String neigh, String address, int pstCode, String notes) {
+    public nodeClient(String idLog, String pass) {
         super(idLog, pass);
-        this.nam = nam;
-        this.mail = mail;
-        this.tel = tel;
-        this.country = country;
-        this.dep = dep;
-        this.mun = mun;
-        this.neigh = neigh;
-        this.address = address;
-        this.pstCode = pstCode;
-        this.notes = notes;
-        this.cart = new shoppingCart();
-        this.wishList = new wishList();
-        this.history = new purchaseHistory();
+        this.idLog = idLog;
+        this.pass = pass;
+        cart = new shoppingCart();
+        wishList = new wishList();
+        history = new purchaseHistory();
     }
 
     public void addProductToCart(nodeProduct product) {

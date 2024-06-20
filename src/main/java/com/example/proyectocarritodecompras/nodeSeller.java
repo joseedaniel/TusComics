@@ -8,29 +8,31 @@ public class nodeSeller extends nodeUser {
     boolean typeSeller;
     nodeProduct soldProducts;
 
-    public nodeSeller(String idLog, String pass, boolean typeSeller) {
+    public nodeSeller() {
+        super();
+        typeSeller = false;
+        soldProducts = null;
+    }
+
+    public nodeSeller(String idLog, String pass) {
         super(idLog, pass);
-        this.typeSeller = typeSeller;
-        this.soldProducts = null;
+        typeSeller = true;
+        soldProducts = null;
     }
 
     public void addSoldProduct(nodeProduct product) {
         if (soldProducts == null) {
-            soldProducts = new nodeProduct();
             soldProducts = product;
-            soldProducts.ant = soldProducts;
-            soldProducts.sig = soldProducts;
+            soldProducts.sig = soldProducts.ant = product;
         } else {
-            nodeProduct first = soldProducts.sig;
-            soldProducts.sig = product;
-            first.ant = product;
-            product.ant = soldProducts;
+            nodeProduct first = soldProducts;
+            nodeProduct last = soldProducts.ant;
+            last.sig = product;
+            product.ant = last;
             product.sig = first;
+            first.ant = product;
+            soldProducts = product;
         }
-    }
-
-    public nodeProduct createProduct(String urlImage, String idProduct, String name, String desc, String category, int quantity, double price) {
-        return new nodeProduct(urlImage, idProduct, name, desc, category, quantity, price);
     }
 
     public void editProduct(nodeProduct product, String urlImage, String idProduct, String name, String desc, String category, int quantity, double price) {
@@ -49,7 +51,7 @@ public class nodeSeller extends nodeUser {
         nodeProduct current = soldProducts;
         do {
             if (current == product) {
-                if (current == soldProducts && current.sig == soldProducts) {
+                if (current.sig == current) {
                     soldProducts = null;
                 } else {
                     current.ant.sig = current.sig;
@@ -84,5 +86,4 @@ public class nodeSeller extends nodeUser {
         String[] parts = line.split(",");
         return new nodeProduct(parts[0], parts[1], parts[2], parts[3], parts[4], Integer.parseInt(parts[5]), Double.parseDouble(parts[6]));
     }
-
 }
