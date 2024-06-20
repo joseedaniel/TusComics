@@ -12,11 +12,12 @@ public class store {
     private static store instance;
     private nodeUser currentUser;
 
-     store() {
+    store() {
         cabUser = null;
         cabProduct = null;
     }
 
+    //Listas principales
     public void setAddClient(nodeClient info) {
         if (cabUser == null) {
             cabUser = info;
@@ -27,11 +28,6 @@ public class store {
             cabUser.sig.ant = info;
             cabUser.sig = info;
             cabUser = info;
-//            nodeUser ultimo = cabUser.ant;
-//            info.sig = cabUser;
-//            info.ant = ultimo;
-//            cabUser.ant = info;
-//            ultimo.sig = info;
         }
     }
 
@@ -48,23 +44,21 @@ public class store {
         }
     }
 
-    public void addProduct(nodeSeller seller, nodeProduct product) {
-        if (seller instanceof nodeSeller) {
-            if (cabProduct == null) {
-                cabProduct = product;
-                product.sig = product.ant = product;
-            } else {
-                nodeProduct last = cabProduct.ant;
-                last.sig = product;
-                product.ant = last;
-                product.sig = cabProduct;
-                cabProduct.ant = product;
-            }
+    public void addProduct(nodeProduct product) {
+        if (cabProduct == null) {
+            cabProduct = product;
+            product.sig = product.ant = product;
         } else {
-            throw new IllegalArgumentException("Solo los vendedores pueden agregar productos.");
+            nodeProduct last = cabProduct.ant;
+            last.sig = product;
+            product.ant = last;
+            product.sig = cabProduct;
+            cabProduct.ant = product;
         }
     }
 
+
+    //Busqueda por ID
     public nodeUser getBuscarIdUser(String idLog) {
         if (cabUser == null) {
             return null;
@@ -76,7 +70,7 @@ public class store {
             }
             temp = temp.sig;
         } while (temp != cabUser);
-        return null; // Retorna null si no se encuentra el usuario con el idLog dado
+        return null;
     }
 
     public boolean isUserExists(String idLog) {
@@ -90,9 +84,132 @@ public class store {
             }
             temp = temp.sig;
         } while (temp != cabUser);
-        return false; // Retorna false si no se encuentra el usuario con el idLog dado
+        return false;
     }
 
+    public nodeProduct getProductById(String id) {
+        if (cabProduct == null) {
+            return null;
+        }
+
+        nodeProduct temp = cabProduct;
+        do {
+            if (temp.idProduct.equals(id)) {
+                return temp;
+            }
+            temp = temp.sig;
+        } while (temp != cabProduct);
+
+        return null;
+    }
+
+
+    //Manipulacion de archivos
+    public void saveAllProducts(String filename) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+        nodeProduct temp = cabProduct.sig;
+        if (temp != null) {
+            do {
+                String info = temp.urlImage + "," + temp.idProduct + "," + temp.name + "," + temp.desc + "," + temp.category + "," + temp.quantity + "," + temp.price;
+                writer.write(info);
+                writer.newLine();
+                System.out.println(info);
+
+                temp = temp.sig;
+            } while (temp != cabProduct.sig);
+        }
+        writer.close();
+    }
+
+    public void loadAllProducts(String fileName) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 7) {
+                    String urlImage = parts[0].trim();
+                    String idProduct = parts[1].trim();
+                    String name = parts[2].trim();
+                    String desc = parts[3].trim();
+                    String category = parts[4].trim();
+                    int quantity = Integer.parseInt(parts[5].trim());
+                    double price = Double.parseDouble(parts[6].trim());
+
+                    nodeProduct product = new nodeProduct(urlImage, idProduct, name, desc, category, quantity, price);
+                    addProduct(product);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveAllClients(String filename) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+        nodeUser temp = cabUser.sig;
+        if (temp != null) {
+            do {
+                String info = temp.idLog + ":" + temp.pass;
+                writer.write(info);
+                writer.newLine();
+                //System.out.println(info);
+
+                temp = temp.sig;
+            } while (temp != cabUser.sig);
+        }
+        writer.close();
+    }
+
+    public void loadAllClients(String fileName) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(":");
+                if (parts.length >= 2) {
+                    String id = parts[0].trim();
+                    String password = parts[1].trim();
+                    nodeClient client = new nodeClient(id, password);
+                    setAddClient(client);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveAllSellers(String filename) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+        nodeUser temp = cabUser.sig;
+        if (temp != null) {
+            do {
+                String info = temp.idLog + ":" + temp.pass;
+                writer.write(info);
+                writer.newLine();
+                temp = temp.sig;
+            } while (temp != cabUser.sig);
+        }
+        writer.close();
+    }
+
+    public void loadAllSellers(String fileName) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(":");
+                if (parts.length >= 2) {
+                    String id = parts[0].trim();
+                    String password = parts[1].trim();
+                    nodeSeller seller = new nodeSeller(id, password);
+                    setAddSeller(seller);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    //Manipulacion de listas auxiliares
     public void addProductToClientCart(nodeClient client, nodeProduct product) {
         client.addProductToCart(product);
     }
@@ -121,8 +238,6 @@ public class store {
         seller.addSoldProduct(product);
     }
 
-
-
     public void editProduct(nodeSeller seller, nodeProduct product, String urlImage, String idProduct, String name, String desc, String category, int quantity, double price) {
         if (seller instanceof nodeSeller) {
             seller.editProduct(product, urlImage, idProduct, name, desc, category, quantity, price);
@@ -139,112 +254,9 @@ public class store {
         }
     }
 
-    public void saveAllProducts(String filename) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
-        nodeProduct temp = cabProduct.sig;
-        if (temp != null) {
-            do {
-                String info = temp.urlImage + ":" + temp.idProduct + ":" + temp.name + ":" + temp.desc + ":" + temp.category + ":" + temp.quantity + ":" + temp.price;
-                writer.write(info);
-                writer.newLine();
-                System.out.println(info);
-
-                temp = temp.sig;
-            } while (temp != cabProduct.sig);
-        }
-        writer.close();
-    }
-
-    public void saveAllClients(String filename) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
-        nodeUser temp = cabUser.sig;
-        if (temp != null) {
-            do {
-                String info = temp.idLog + ":" + temp.pass ;
-                writer.write(info);
-                writer.newLine();
-                //System.out.println(info);
-
-                temp = temp.sig;
-            } while (temp != cabUser.sig);
-        }
-        writer.close();
-    }
 
 
-    public void loadAllClients(String fileName) {
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(":");
-                if (parts.length >= 2) {
-                    String id = parts[0].trim();
-                    String password = parts[1].trim();
-                    nodeClient client = new nodeClient(id, password);
-                    setAddClient(client);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void saveAllSellers(String filename) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
-        nodeUser temp = cabUser.sig;
-        if (temp != null) {
-            do {
-                String info = temp.idLog + ":" + temp.pass ;
-                writer.write(info);
-                writer.newLine();
-                //System.out.println(info);
-                temp = temp.sig;
-            } while (temp != cabUser.sig);
-        }
-        writer.close();
-    }
-
-    public void loadAllSellers(String fileName) {
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(":");
-                if (parts.length >= 2) {
-                    String id = parts[0].trim();
-                    String password = parts[1].trim();
-                    nodeSeller seller = new nodeSeller(id, password);
-                    setAddSeller(seller);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void loadAllProducts(String fileName) {
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(":");
-                if (parts.length >= 7) {
-                    String urlImage = parts[0].trim();
-                    String idProduct = parts[1].trim();
-                    String name = parts[2].trim();
-                    String desc = parts[3].trim();
-                    String category = parts[4].trim();
-                    int quantity = Integer.parseInt(parts[5].trim());
-                    double price = Double.parseDouble(parts[6].trim());
-
-                    nodeProduct product = new nodeProduct(urlImage, idProduct, name, desc, category, quantity, price);
-                    addProduct(null, product);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
+    //Identificadores
     public static store getInstance() {
         if (instance == null) {
             instance = new store();
@@ -280,10 +292,6 @@ public class store {
         return currentUser;
     }
 
-    public boolean isLoggedIn() {
-        return currentUser != null;
-    }
-
     private boolean esComprador(String id, String password) {
         nodeUser user = getBuscarIdUser(id);
         return user instanceof nodeClient && user.getPassword().equals(password);
@@ -295,19 +303,10 @@ public class store {
     }
 
     public void registrarUsuario(String idLog, String password, boolean esComprador) {
-//        if (isUserExists(idLog)) {
-//            throw new IllegalArgumentException("El ID de usuario ya existe.");
-//        }
 
         if (esComprador) {
             nodeClient nuevoCliente = new nodeClient(idLog, password);
             setAddClient(nuevoCliente);
-//            try {
-////                saveAllClients("clients.txt");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                throw new IllegalArgumentException("Error al guardar el cliente en el archivo.");
-//            }
         } else {
             nodeSeller nuevoVendedor = new nodeSeller(idLog, password);
             setAddSeller(nuevoVendedor);
@@ -321,6 +320,8 @@ public class store {
     }
 
 
+
+    //Metodos redundantes
     private void mostrarError(String mensaje) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Error");
@@ -328,4 +329,5 @@ public class store {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+
 }

@@ -30,7 +30,7 @@
             <Glow />
          </effect>
       </Button>
-      <Button fx:id="botonIniciar" layoutX="412.0" layoutY="389.0" mnemonicParsing="false" onAction="#irAIniciarSesion" prefHeight="51.0" prefWidth="126.0" style="-fx-background-color: c01313; -fx-background-radius: 30;" text="INICIO DE&#10;SESIÓN" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="botonIniciar" layoutX="412.0" layoutY="389.0" mnemonicParsing="false" onAction="#irAInicioSesion" prefHeight="51.0" prefWidth="126.0" style="-fx-background-color: c01313; -fx-background-radius: 30;" text="INICIO DE&#10;SESIÓN" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Inter ExtraBold" size="15.0" />
          </font>
