@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="572.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectocarritodecompras.HelloController">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <BorderPane prefHeight="572.0" prefWidth="770.0">
+               <left>
+                  <SplitPane dividerPositions="0.008620689655172414, 0.02586206896551724, 0.12931034482758622, 0.23275862068965517, 0.33620689655172414" orientation="VERTICAL" prefHeight="444.0" prefWidth="209.0" BorderPane.alignment="CENTER">
+                     <items>
+                        <Label prefHeight="59.0" prefWidth="207.0" text="Categorías">
+                           <font>
+                              <Font name="Inter ExtraBold" size="16.0" />
+                           </font>
+                           <graphic>
+                              <ImageView blendMode="COLOR_BURN" fitHeight="30.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/Rectangle16.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Label>
+                        <Button fx:id="comedia" mnemonicParsing="false" onAction="#irAComedia" prefHeight="28.0" prefWidth="185.0" style="-fx-background-color: blue;" text="--Comedia                         " textFill="WHITE">
+                           <font>
+                              <Font name="Inter ExtraBold" size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="accion" mnemonicParsing="false" onAction="#irAAccion" prefHeight="28.0" prefWidth="185.0" style="-fx-background-color: FF1616;" text="--Acción                             " textFill="WHITE">
+                           <font>
+                              <Font name="Inter ExtraBold" size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="terror" mnemonicParsing="false" onAction="#irATerror" prefHeight="28.0" prefWidth="185.0" style="-fx-background-color: FBE415;" text="--Terror                              " textFill="WHITE">
+                           <font>
+                              <Font name="Inter ExtraBold" size="14.0" />
+                           </font>
+                        </Button>
+                        <VBox alignment="TOP_CENTER" prefHeight="139.0" prefWidth="207.0">
+                           <children>
+                              <Label text="Historial">
+                                 <font>
+                                    <Font name="Inter ExtraBold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="bHistorial" blendMode="COLOR_BURN" mnemonicParsing="false" onAction="#irAHistorialCliente">
+                                 <graphic>
+                                    <ImageView fitHeight="50.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/Rectangle20.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" prefHeight="156.0" prefWidth="207.0">
+                           <children>
+                              <Label text="Lista de deseos">
+                                 <font>
+                                    <Font name="Inter ExtraBold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="bListaDeseos" blendMode="COLOR_BURN" mnemonicParsing="false" onAction="#irAListaDeDeseos">
+                                 <graphic>
+                                    <ImageView fitHeight="50.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/Rectangle21.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </items>
+                  </SplitPane>
+               </left>
+               <center>
+                  <Pane prefHeight="160.0" prefWidth="561.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <SplitPane layoutX="14.0" layoutY="60.0" orientation="VERTICAL" prefHeight="397.0" prefWidth="528.0">
+                           <items>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="495.0" prefWidth="550.0">
+                                 <children>
+                                    <ImageView fx:id="imagen" fitHeight="185.0" fitWidth="221.0" layoutX="42.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label fx:id="valor" layoutX="279.0" layoutY="32.0" text="\$valor">
+                                       <font>
+                                          <Font name="Inter ExtraBold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <ButtonBar buttonMinWidth="40.0" layoutX="42.0" layoutY="246.0" prefHeight="40.0" prefWidth="182.0">
+                                       <buttons>
+                                          <Button fx:id="bDecrementar" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="-" />
+                                          <TextField fx:id="cantidad" alignment="CENTER" prefHeight="25.0" prefWidth="31.0" text="0" />
+                                          <Button fx:id="bIncrementar" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="+" />
+                                       </buttons>
+                                    </ButtonBar>
+                                    <Button fx:id="comprar" layoutX="382.0" layoutY="266.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="120.0" style="-fx-background-radius: 30; -fx-background-color: #0ACCF6;" text="Comprar" textFill="WHITE">
+                                       <font>
+                                          <Font name="Inter ExtraBold" size="18.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="añadirCarrito" layoutX="356.0" layoutY="326.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="146.0" style="-fx-background-radius: 30; -fx-background-color: F2DC0F;" text="Añadir a deseos" textFill="WHITE">
+                                       <font>
+                                          <Font name="Inter ExtraBold" size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <ScrollPane layoutX="279.0" layoutY="65.0" prefHeight="174.0" prefWidth="223.0">
+                                       <content>
+                                          <Label fx:id="descripcion" prefHeight="31.0" prefWidth="106.0" text="Descripción">
+                                             <font>
+                                                <Font name="Inter ExtraBold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                       </content>
+                                    </ScrollPane>
+                                    <Button fx:id="añadirDeseos" layoutX="46.0" layoutY="326.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="146.0" style="-fx-background-radius: 30; -fx-background-color: F2DC0F;" text="Añadir a deseos" textFill="WHITE">
+                                       <font>
+                                          <Font name="Inter ExtraBold" size="15.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                           </items>
+                        </SplitPane>
+                        <Label fx:id="nombreHistorieta" layoutX="14.0" layoutY="4.0" prefHeight="58.0" prefWidth="390.0" text="nombreHistorieta" textFill="#e40c0c">
+                           <font>
+                              <Font name="Inter ExtraBold" size="33.0" />
+                           </font>
+                        </Label>
+                        <Separator layoutX="12.0" layoutY="55.0" prefHeight="7.0" prefWidth="529.0" />
+                     </children>
+                  </Pane>
+               </center>
+               <top>
+                  <Pane prefHeight="96.0" prefWidth="749.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <TextField fx:id="buscar1" layoutX="274.0" layoutY="30.0" prefHeight="23.0" prefWidth="167.0" style="-fx-background-color: beb5b5; -fx-background-radius: 15;">
+                           <font>
+                              <Font name="Inter ExtraBold" size="12.0" />
+                           </font>
+                        </TextField>
+                        <Button blendMode="COLOR_BURN" layoutX="450.0" layoutY="18.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="52.0">
+                           <graphic>
+                              <ImageView fitHeight="53.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/Rectangle12.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="bRegresar" blendMode="COLOR_BURN" layoutX="14.0" layoutY="18.0" mnemonicParsing="false" onAction="#bRegresarUsos" visible="false">
+                           <graphic>
+                              <ImageView fitHeight="42.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/Rectangle10.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="bCarrito" blendMode="COLOR_BURN" layoutX="108.0" layoutY="15.0" mnemonicParsing="false" onAction="#irACarrito">
+                           <graphic>
+                              <ImageView fitHeight="59.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/Rectangle11.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="bHome" blendMode="COLOR_BURN" layoutX="528.0" layoutY="25.0" mnemonicParsing="false" onAction="#irAPrincipalCliente">
+                           <graphic>
+                              <ImageView fitHeight="33.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/home.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <ImageView fitHeight="88.0" fitWidth="125.0" layoutX="645.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/logo.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="bLogout" blendMode="COLOR_BURN" layoutX="583.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleLogoutButtonAction" prefHeight="30.0" prefWidth="39.0">
+                           <graphic>
+                              <ImageView fitHeight="33.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/logout.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </Pane>
+               </top>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
