@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="572.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectocarritodecompras.HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="572.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectocarritodecompras.AppController">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -33,7 +33,7 @@
                                        <children>
                                           <VBox alignment="BOTTOM_CENTER" prefHeight="150.0" prefWidth="170.0">
                                              <children>
-                                                <Label fx:id="nombreHistorieta" text="nombreHistorieta">
+                                                <Label fx:id="nombreHistorieta">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -165,7 +165,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="bRegresar" blendMode="COLOR_BURN" layoutX="14.0" layoutY="18.0" mnemonicParsing="false" onAction="#bRegresarUsos" visible="false">
+                        <Button fx:id="bRegresar" blendMode="COLOR_BURN" layoutX="14.0" layoutY="18.0" mnemonicParsing="false" visible="false">
                            <graphic>
                               <ImageView fitHeight="42.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -197,7 +197,7 @@
                               <Image url="@images/logo.png" />
                            </image>
                         </ImageView>
-                        <Button fx:id="bLogout" blendMode="COLOR_BURN" layoutX="583.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleLogoutButtonAction" prefHeight="30.0" prefWidth="39.0">
+                        <Button fx:id="bLogout" blendMode="COLOR_BURN" layoutX="583.0" layoutY="22.0" mnemonicParsing="false" onAction="#irABienvenida" prefHeight="30.0" prefWidth="39.0">
                            <graphic>
                               <ImageView fitHeight="33.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

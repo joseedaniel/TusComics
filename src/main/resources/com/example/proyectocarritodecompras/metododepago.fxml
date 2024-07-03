@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="572.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectocarritodecompras.HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="572.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectocarritodecompras.AppController">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -176,17 +176,17 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="subtotal" layoutX="99.0" layoutY="59.0" prefHeight="17.0" prefWidth="81.0" text="\$Subtotal">
+                                    <Label fx:id="subtotal" layoutX="99.0" layoutY="59.0" prefHeight="17.0" prefWidth="81.0">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="envio" layoutX="99.0" layoutY="98.0" prefHeight="0.0" prefWidth="118.0" text="\$Envío">
+                                    <Label fx:id="envio" layoutX="99.0" layoutY="98.0" prefHeight="0.0" prefWidth="118.0">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="precioTotal" layoutX="152.0" layoutY="137.0" prefHeight="17.0" prefWidth="83.0" text="\$total">
+                                    <Label fx:id="precioTotal" layoutX="152.0" layoutY="137.0" prefHeight="17.0" prefWidth="83.0">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -224,7 +224,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="bRegresar" blendMode="COLOR_BURN" layoutX="14.0" layoutY="18.0" mnemonicParsing="false" onAction="#bRegresarUsos" visible="false">
+                        <Button fx:id="bRegresar" blendMode="COLOR_BURN" layoutX="14.0" layoutY="18.0" mnemonicParsing="false" visible="false">
                            <graphic>
                               <ImageView fitHeight="42.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

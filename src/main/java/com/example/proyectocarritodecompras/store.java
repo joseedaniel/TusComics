@@ -1,5 +1,7 @@
 package com.example.proyectocarritodecompras;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -319,6 +321,23 @@ public class store {
         }
     }
 
+    public ObservableList<nodeProduct> getAllProducts() {
+        ObservableList<nodeProduct> productList = FXCollections.observableArrayList();
+
+        // Iterar sobre la lista de productos y añadirlos a productList
+        nodeProduct temp = cabProduct;
+        if (temp != null) {
+            do {
+                productList.add(temp);
+                temp = temp.sig;
+            } while (temp != cabProduct);
+        }
+
+        return productList;
+    }
+
+
+    
 
 
     //Metodos redundantes

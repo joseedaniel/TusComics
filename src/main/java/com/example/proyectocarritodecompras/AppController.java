@@ -12,18 +12,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import static com.example.proyectocarritodecompras.HelloApplication.llenarCombo;
+import static com.example.proyectocarritodecompras.TusComicsApp.llenarCombo;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.Stack;
 
-public class HelloController {
+public class AppController {
     ObservableList<String> categorias = FXCollections.observableArrayList("Comedia", "Acción", "Terror");
     @FXML
     private Stage stage;
@@ -57,15 +58,67 @@ public class HelloController {
     @FXML
     private Label nombreHistorieta;
     @FXML
-    private ImageView portadaHistorieta;
-    @FXML
     private Label idHistorieta;
     @FXML
     private Label precioLabel;
+    @FXML
+    private ListView<nodeProduct> productInfo;
+    @FXML
+    private VBox mainVBox;
 
     public void setStore(store storetemp) {
         this.storetemp = storetemp;
     }
+
+
+    public void cargarProductos() {
+        if (productInfo != null) {
+            ObservableList<nodeProduct> productos = FXCollections.observableArrayList(storetemp.getAllProducts());
+            productInfo.setItems(productos);
+            productInfo.setCellFactory(param -> new ListCell<nodeProduct>() {
+                @Override
+                protected void updateItem(nodeProduct item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null || item.name == null) {
+                        setText(null);
+                    } else {
+                        VBox vbox = createProductVBox(item);
+                        setGraphic(vbox);
+                    }
+                }
+            });
+        } else {
+            System.err.println("ListView productInfo no encontrado.");
+        }
+    }
+
+    private VBox createProductVBox(nodeProduct product) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("productviewseller.fxml"));
+            VBox productBox = loader.load();
+            ProductViewSellerController productController = loader.getController();
+            productController.setProduct(product);
+            return productBox;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @FXML
+    private void cargarProductView() {
+        if (mainVBox == null) {
+            System.err.println("mainVBox no inicializado correctamente.");
+            return;
+        }
+
+        mainVBox.getChildren().clear(); // Limpiar contenido previo
+
+        // Lógica para cargar la vista de productos en mainVBox
+        // Asegúrate de agregar tus nodos (por ejemplo, productos) a mainVBox
+    }
+
+
 
 
 
@@ -168,16 +221,30 @@ public class HelloController {
         nodeProduct product = new nodeProduct(selectedImagePath, id, nombre, descripcion, categoria, cantidad, precio);
 
         storeInstance.addProduct(product);
+        cargarProductos();
+
         showInfoAlert("Producto agregado", "El producto se ha agregado exitosamente.");
         storeInstance.saveAllProducts("products.txt");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("principalvendedor.fxml"));
         Parent root = loader.load();
-        HelloController controller = loader.getController();
-        controller.reemplazarRecursos(product);
+        AppController controller = loader.getController();
+        controller.productInfo = new ListView<>();
+        controller.cargarProductView();
 
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
+    // Método para navegar a la vista del vendedor
+    public void irAPrincipalVendedor(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("principalvendedor.fxml"));
+        Parent root = loader.load();
+        AppController controller = loader.getController();
+        controller.setStore(storetemp);
         Scene scene = new Scene(root);
-        Stage stage = (Stage) añadirImagen.getScene().getWindow();
+        Stage stage = (Stage) (event != null ? ((Node) event.getSource()).getScene().getWindow() : registrar.getScene().getWindow());
         stage.setScene(scene);
         stage.show();
     }
@@ -279,13 +346,13 @@ public class HelloController {
         stage.show();
     }
 
-    public void irAPrincipalVendedor(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("principalvendedor.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
+//    public void irAPrincipalVendedor(ActionEvent event) throws IOException {
+//        root = FXMLLoader.load(getClass().getResource("principalvendedor.fxml"));
+//        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
+//    }
 
     public void irAAñadirProducto(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("añadirproducto.fxml"));
@@ -304,11 +371,10 @@ public class HelloController {
     }
 
 
-
     // manipulacion de escenas
     public void reemplazarRecursos(nodeProduct product) {
         Image image = new Image(product.urlImage);
-        portadaHistorieta.setImage(image);
+        añadirImagen.setImage(image);
         idHistorieta.setText(product.idProduct);
         precioLabel.setText(String.valueOf(product.price));
         nombreHistorieta.setText(product.name);
@@ -342,6 +408,8 @@ public class HelloController {
 
 
 
+
+
     //Manipulacion de productos.
     @FXML
     private void handleSelectImage() {
@@ -361,15 +429,13 @@ public class HelloController {
                 Files.copy(selectedFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 selectedImagePath = destFile.toURI().toString();
                 Image image = new Image(selectedImagePath);
-                portadaHistorieta.setImage(image);
+                añadirImagen.setImage(image);
             } catch (IOException e) {
                 showErrorAlert("Error al copiar la imagen", "No se pudo copiar la imagen seleccionada a la carpeta designada.");
                 e.printStackTrace();
             }
         }
     }
-
-
 
 
     //Metodos redundantes
@@ -403,11 +469,10 @@ public class HelloController {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         Parent root = loader.load();
-        HelloController controller = loader.getController();
+        AppController controller = loader.getController();
         controller.setStore(storetemp);
-        // Aquí puedes actualizar la escena según lo necesites
         Scene scene = new Scene(root);
-        Stage stage = (Stage) idUsuario.getScene().getWindow(); // Obtén la referencia al Stage actual
+        Stage stage = (Stage) idUsuario.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
