@@ -43,8 +43,15 @@ public class nodeProduct {
     public static nodeProduct deserialize(BufferedReader reader) throws IOException {
         String line = reader.readLine();
         if (line == null || line.isEmpty()) return null;
-        String[] parts = line.split(",");
-        return new nodeProduct(parts[0], parts[1], parts[2], parts[3], parts[4], Integer.parseInt(parts[5]), Double.parseDouble(parts[6]));
+        String[] parts = line.split(",", -1); // Use -1 to preserve empty strings
+        return new nodeProduct(
+                parts[0],           // urlImage
+                parts[1],           // idProduct
+                parts[2],           // name
+                parts[3],           // desc
+                parts[4],           // category
+                Integer.parseInt(parts[5]),    // quantity
+                Double.parseDouble(parts[6])    // price
+        );
     }
-
 }

@@ -7,6 +7,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.io.*;
+
 public class ProductViewClientController {
 
     @FXML
@@ -26,28 +28,62 @@ public class ProductViewClientController {
     @FXML
     private Button bAgregarCarrito;
     private String descripcion;
-    private String categoia;
+    private String categoria;
+
 
     public void setProduct(nodeProduct product) {
+
         idHistorieta.setText(product.idProduct);
         nombreHistorieta.setText(product.name);
         añadirImagen.setImage(new Image(product.urlImage));
         precioLabel.setText(String.format("$%.2f", product.price));
         cantidad.setText("1");
         descripcion = product.desc;
-        categoia = product.category;
+        categoria = product.category;
     }
 
-    public void añadirACarrito() {
-        nodeProduct producto = new nodeProduct(
-                añadirImagen.getImage().getUrl(),
-                idHistorieta.getText(),
-                nombreHistorieta.getText(),
-                descripcion,
-                categoia,
-                Integer.parseInt(cantidad.getText()),
-                Double.parseDouble(precioLabel.getText())
-        );
-        System.out.println("ID: " + idHistorieta.getText());
+    @FXML
+    public void añadirACarrito() throws IOException {
+        String session = readSession();
+        String producto =
+                añadirImagen.getImage().getUrl() + "," +
+                        idHistorieta.getText() + "," +
+                        nombreHistorieta.getText() + "," +
+                        descripcion + "," +
+                        categoria + "," +
+                        Integer.parseInt(cantidad.getText()) + "," +
+                        Double.parseDouble(precioLabel.getText().replace("$", "")
+                        )+","+session;
+        BufferedWriter writer = new BufferedWriter(new FileWriter("shoppingcart.txt"));
+        writer.write(producto);
+        writer.newLine();
+        writer.close();
+        System.out.println("Producto agregado al carrito. ID: " + idHistorieta.getText());
     }
+
+    private String readSession() {
+        String filePath = "currentsession.txt"; // Ruta al archivo que quieres leer
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String primeraLinea = reader.readLine(); // Lee la primera línea
+            return primeraLinea;
+        } catch (IOException e) {
+            System.err.println("Error al leer el archivo: " + e.getMessage());
+            return "";
+        }
+    }
+
+
+//    public void añadirACarrito() {
+//        nodeProduct producto = new nodeProduct(
+//                añadirImagen.getImage().getUrl(),
+//                idHistorieta.getText(),
+//                nombreHistorieta.getText(),
+//                descripcion,
+//                categoria,
+//                Integer.parseInt(cantidad.getText()),
+//                Double.parseDouble(precioLabel.getText())
+//        );
+//        System.out.println("ID: " + idHistorieta.getText());
+//    }
 }

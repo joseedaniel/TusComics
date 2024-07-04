@@ -32,6 +32,7 @@ public class TusComicsApp extends Application {
         storetemp.loadAllSellers("sellers.txt");
         storetemp.loadAllProducts("products.txt");
 
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("bienvenida.fxml"));
         Parent root = loader.load();
 

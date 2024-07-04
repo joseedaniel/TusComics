@@ -14,6 +14,7 @@ public class store {
     private static store instance;
     private nodeUser currentUser;
 
+
     store() {
         cabUser = null;
         cabProduct = null;
@@ -212,50 +213,31 @@ public class store {
 
 
     //Manipulacion de listas auxiliares
-    public void addProductToClientCart(nodeClient client, nodeProduct product) {
-        client.addProductToCart(product);
-    }
 
-    public nodeProduct removeProductFromClientPurchaseHistory(nodeClient client) {
-        return client.removeProductFromCart();
-    }
-
-    public void addProductToClientWishlist(nodeClient client, nodeProduct product) {
-        client.addProductToWishlist(product);
-    }
-
-    public nodeProduct removeProductFromClientWishlist(nodeClient client) {
-        return client.removeProductFromWishlist();
-    }
-
-    public boolean isClientWishlistEmpty(nodeClient client) {
-        return client.isWishlistEmpty();
-    }
-
-    public void buyProductFromClientCart(nodeClient client) {
-        client.buyItem();
-    }
-
-    public void addProductToSellerSoldProducts(nodeSeller seller, nodeProduct product) {
-        seller.addSoldProduct(product);
-    }
-
-    public void editProduct(nodeSeller seller, nodeProduct product, String urlImage, String idProduct, String name, String desc, String category, int quantity, double price) {
-        if (seller instanceof nodeSeller) {
-            seller.editProduct(product, urlImage, idProduct, name, desc, category, quantity, price);
-        } else {
-            throw new IllegalArgumentException("Solo los vendedores pueden editar productos.");
-        }
-    }
-
-    public void deleteProduct(nodeSeller seller, nodeProduct product) {
-        if (seller instanceof nodeSeller) {
-            seller.deleteProduct(product);
-        } else {
-            throw new IllegalArgumentException("Solo los vendedores pueden eliminar productos.");
-        }
-    }
-
+//    public void addToCart(nodeProduct product) {
+//        if (currentUser != null && currentUser instanceof nodeClient) {
+//            ((nodeClient) currentUser).addToCart(product);
+//        }
+//    }
+//
+//    public void removeFromCart(nodeProduct product) {
+//        if (currentUser != null && currentUser instanceof nodeClient) {
+//            ((nodeClient) currentUser).removeFromCart(product);
+//        }
+//    }
+//
+//    public ObservableList<nodeProduct> getCartItems() {
+//        if (currentUser != null && currentUser instanceof nodeClient) {
+//            return ((nodeClient) currentUser).getCartItems();
+//        }
+//        return FXCollections.observableArrayList();
+//    }
+//
+//    public void clearCart() {
+//        if (currentUser != null && currentUser instanceof nodeClient) {
+//            ((nodeClient) currentUser).removeProductFromCart();
+//        }
+//    }
 
 
     //Identificadores
@@ -324,6 +306,7 @@ public class store {
     public ObservableList<nodeProduct> getAllProducts() {
         ObservableList<nodeProduct> productList = FXCollections.observableArrayList();
 
+        // Iterar sobre la lista de productos y añadirlos a productList
         nodeProduct temp = cabProduct;
         if (temp != null) {
             do {

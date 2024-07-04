@@ -1,76 +1,57 @@
 package com.example.proyectocarritodecompras;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class shoppingCart {
 
-
-    nodeProduct cab;
-    nodeProduct fin;
-    int size;
+    private List<nodeProduct> cart;
 
     public shoppingCart() {
-        cab = null;
-        fin = null;
-        size = 0;
-
+        this.cart = new ArrayList<>();
     }
 
-    public void add(nodeProduct info) {
-        if (cab == null) {
-            cab = info;
-            fin = info;
-            cab.sig = cab;
-            cab.ant = cab;
-        } else {
-            fin.sig = info;
-            info.ant = fin;
-            info.sig = cab;
-            cab.ant = info;
-            fin = info;
-        }
-        size++;
+    public void add(nodeProduct product) {
+        this.cart.add(product);
     }
 
     public nodeProduct remove() {
-        if (size == 0) {
+        if (cart.isEmpty()) {
             return null;
         }
-        nodeProduct removedProduct = fin;
-        if (size == 1) {
-            cab = null;
-            fin = null;
-        } else {
-            fin = fin.ant;
-            fin.sig = cab;
-            cab.ant = fin;
-        }
-        size--;
-        return removedProduct;
+        return cart.remove(cart.size() - 1); // Remove the last added product (LIFO behavior)
     }
 
-    public void serialize(String filename) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
-        nodeProduct current = cab;
-        if (current != null) {
-            do {
-                current.serialize(writer);
-                current = current.sig;
-            } while (current != cab);
+    public void serialize(String filename, String idLog) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
+            for (nodeProduct product : cart) {
+                writer.write(String.format("%s,%s,%s,%s,%s,%d,%.2f,%s\n",
+                        product.urlImage, product.idProduct, product.name,
+                        product.desc, product.category, product.quantity,
+                        product.price, idLog));
+            }
         }
-        writer.close();
     }
 
-    public static shoppingCart deserialize(String filename) throws IOException {
+    public static shoppingCart deserialize(String filename, String idLog) throws IOException {
         shoppingCart cart = new shoppingCart();
-        BufferedReader reader = new BufferedReader(new FileReader(filename));
-        nodeProduct product;
-        while ((product = nodeProduct.deserialize(reader)) != null) {
-            cart.add(product);
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 8 && parts[7].equals(idLog)) {
+                    nodeProduct product = new nodeProduct(parts[0], parts[1], parts[2],
+                            parts[3], parts[4], Integer.parseInt(parts[5]),
+                            Double.parseDouble(parts[6]));
+                    cart.add(product);
+                }
+            }
         }
-        reader.close();
         return cart;
     }
-
 }
-

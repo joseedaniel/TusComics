@@ -20,7 +20,9 @@ import javafx.stage.Stage;
 
 import static com.example.proyectocarritodecompras.TusComicsApp.llenarCombo;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -178,7 +180,10 @@ public class AppController {
             if (user instanceof nodeClient) {
                 currentUser = (nodeClient) user;
                 productos = FXCollections.observableArrayList(storetemp.getAllProducts());
-
+                BufferedWriter writer = new BufferedWriter(new FileWriter("currentsession.txt", false));
+                writer.write(user.idLog);
+                writer.newLine();
+                writer.close();
                 cambiarPantalla(event, "principalclientes.fxml");
             } else if (user instanceof nodeSeller) {
                 cambiarPantalla(event, "principalvendedor2.fxml");
