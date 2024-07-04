@@ -51,34 +51,11 @@ public class nodeClient extends nodeUser {
         return this.cart.remove();
     }
 
-    public void addProductToWishlist(nodeProduct product) {
-        this.wishList.add(product);
-    }
-
-    public nodeProduct removeProductFromWishlist() {
-        return this.wishList.remove();
-    }
-
-    public boolean isWishlistEmpty() {
-        return this.wishList.isEmpty();
-    }
-
-    public void buyItem() {
-        nodeProduct product = this.cart.remove();
-        if (product != null) {
-            this.history.add(product);
-        }
-    }
-
     public void saveClientData() throws IOException {
-        cart.serialize(idLog + "_cart.txt");
-        wishList.serialize(idLog + "_wishlist.txt");
-        history.serialize(idLog + "_history.txt");
+        cart.serialize("shoppingcart.txt", getIdLog());
     }
 
     public void loadClientData() throws IOException {
-        cart = shoppingCart.deserialize(idLog + "_cart.txt");
-        wishList = wishList.deserialize(idLog + "_wishlist.txt");
-        history = purchaseHistory.deserialize(idLog + "_history.txt");
+        cart = shoppingCart.deserialize("shoppingcart.txt", getIdLog());
     }
 }

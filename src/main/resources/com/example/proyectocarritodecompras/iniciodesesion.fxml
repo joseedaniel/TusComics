@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="572.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectocarritodecompras.HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="572.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectocarritodecompras.AppController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#efefef" height="318.0" layoutX="104.0" layoutY="179.0" stroke="#efefef" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="30.0" strokeType="INSIDE" strokeWidth="0.0" width="563.0" />
       <Label layoutX="212.0" layoutY="368.0" text="ID usuario:">
