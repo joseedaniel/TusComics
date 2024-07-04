@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -23,6 +24,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AppController {
     ObservableList<String> categorias = FXCollections.observableArrayList("Comedia", "Acción", "Terror");
@@ -31,6 +34,9 @@ public class AppController {
     private Scene scene;
     private Parent root;
     private String selectedImagePath;
+    private nodeClient currentUser;
+    private ObservableList<nodeProduct> productos;
+
     @FXML
     private TextField idUsuario;
     @FXML
@@ -65,12 +71,15 @@ public class AppController {
     private ListView<nodeProduct> productInfo;
     @FXML
     private VBox mainVBox;
+    @FXML
+    private GridPane espacioProducto;
+
 
     public void setStore(store storetemp) {
         this.storetemp = storetemp;
     }
 
-
+    @FXML
     public void cargarProductos() {
         if (productInfo != null) {
             ObservableList<nodeProduct> productos = FXCollections.observableArrayList(storetemp.getAllProducts());
@@ -83,6 +92,7 @@ public class AppController {
                         setText(null);
                     } else {
                         VBox vbox = createProductVBox(item);
+                        mainVBox = vbox;
                         setGraphic(vbox);
                     }
                 }
@@ -114,12 +124,7 @@ public class AppController {
 
         mainVBox.getChildren().clear(); // Limpiar contenido previo
 
-        // Lógica para cargar la vista de productos en mainVBox
-        // Asegúrate de agregar tus nodos (por ejemplo, productos) a mainVBox
     }
-
-
-
 
 
     //Registro/Login
@@ -171,9 +176,12 @@ public class AppController {
         try {
 
             if (user instanceof nodeClient) {
+                currentUser = (nodeClient) user;
+                productos = FXCollections.observableArrayList(storetemp.getAllProducts());
+
                 cambiarPantalla(event, "principalclientes.fxml");
             } else if (user instanceof nodeSeller) {
-                cambiarPantalla(event, "principalvendedor.fxml");
+                cambiarPantalla(event, "principalvendedor2.fxml");
             }
 
         } catch (IOException e) {
@@ -183,7 +191,7 @@ public class AppController {
     }
 
     @FXML
-    private void handleAddProduct() throws IOException {
+    private void handleAddProduct(ActionEvent event) throws IOException {
         String id = idProducto.getText();
         String nombre = nombreProducto.getText();
         String descripcion = descripcionProducto.getText();
@@ -226,12 +234,24 @@ public class AppController {
         showInfoAlert("Producto agregado", "El producto se ha agregado exitosamente.");
         storeInstance.saveAllProducts("products.txt");
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("principalvendedor.fxml"));
+        //TRABAJANDO
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("principalvendedor2.fxml"));
         Parent root = loader.load();
         AppController controller = loader.getController();
-        controller.productInfo = new ListView<>();
-        controller.cargarProductView();
+        ObservableList<nodeProduct> productos = FXCollections.observableArrayList(storetemp.getAllProducts());
+        int numColumns = 3;
+        for (int i = 0; i < productos.size(); i++) {
+            FXMLLoader loaderProductView = new FXMLLoader(getClass().getResource("productviewseller.fxml"));
+            Node node = loaderProductView.load();
+            ProductViewSellerController controllerProductView = loaderProductView.getController();
+            controllerProductView.setProduct(productos.get(i));
+            int row = i / numColumns;
+            int col = i % numColumns;
+            controller.espacioProducto.add(node, col, row + 3);
+        }
 
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
@@ -239,7 +259,7 @@ public class AppController {
 
     // Método para navegar a la vista del vendedor
     public void irAPrincipalVendedor(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("principalvendedor.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("principalvendedor2.fxml"));
         Parent root = loader.load();
         AppController controller = loader.getController();
         controller.setStore(storetemp);
@@ -248,7 +268,6 @@ public class AppController {
         stage.setScene(scene);
         stage.show();
     }
-
 
 
     //Navegacion
@@ -339,7 +358,24 @@ public class AppController {
     }
 
     public void irAPrincipalCliente(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("principalclientes.fxml"));
+//        root = FXMLLoader.load(getClass().getResource("principalclientes.fxml"));
+        ObservableList<nodeProduct> productos = FXCollections.observableArrayList(storetemp.getAllProducts());
+        System.out.println(productos);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("principalclientes.fxml"));
+//        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Parent root = loader.load();
+        AppController controller = loader.getController();
+        int numColumns = 3;
+        for (int i = 0; i < productos.size(); i++) {
+            FXMLLoader loaderProductView = new FXMLLoader(getClass().getResource("productviewclient.fxml"));
+            Node node = loaderProductView.load();
+            ProductViewClientController controllerProductView = loaderProductView.getController();
+            controllerProductView.setProduct(productos.get(i));
+            int row = i / numColumns;
+            int col = i % numColumns;
+            controller.espacioProducto.add(node, col, row + 3 );
+        }
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -407,9 +443,6 @@ public class AppController {
     }
 
 
-
-
-
     //Manipulacion de productos.
     @FXML
     private void handleSelectImage() {
@@ -459,7 +492,7 @@ public class AppController {
         String fxmlPath;
 
         if (user instanceof nodeSeller) {
-            fxmlPath = "principalvendedor.fxml";
+            fxmlPath = "principalvendedor2.fxml";
         } else if (user instanceof nodeClient) {
             fxmlPath = "principalclientes.fxml";
         } else {

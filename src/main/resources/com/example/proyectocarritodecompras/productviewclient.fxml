@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="productoSpace" alignment="BOTTOM_CENTER" prefHeight="150.0" prefWidth="170.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectocarritodecompras.ProductViewClientController">
+<VBox fx:id="mainVBox" alignment="BOTTOM_CENTER" prefHeight="150.0" prefWidth="170.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectocarritodecompras.ProductViewClientController">
    <children>
       <Label fx:id="idHistorieta">
          <font>
@@ -32,7 +32,7 @@
             <Insets right="13.0" />
          </VBox.margin>
       </ButtonBar>
-      <Button fx:id="bAgregarCarrito" mnemonicParsing="false" prefHeight="31.0" prefWidth="110.0">
+      <Button fx:id="bAgregarCarrito" mnemonicParsing="false" onAction="#añadirACarrito" prefHeight="31.0" prefWidth="110.0">
          <graphic>
             <ImageView fitHeight="22.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true">
                <image>

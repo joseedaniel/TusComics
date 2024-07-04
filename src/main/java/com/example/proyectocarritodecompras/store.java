@@ -324,7 +324,6 @@ public class store {
     public ObservableList<nodeProduct> getAllProducts() {
         ObservableList<nodeProduct> productList = FXCollections.observableArrayList();
 
-        // Iterar sobre la lista de productos y añadirlos a productList
         nodeProduct temp = cabProduct;
         if (temp != null) {
             do {
